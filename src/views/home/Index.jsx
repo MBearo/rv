@@ -22,10 +22,10 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <div style={{ border: "1px solid rgb(97, 218, 251)", padding: "10px" }}>
-        <div>React area</div>
+      <div style={{ border: "1px solid rgb(97, 218, 251)", padding: "10px",margin:"10px" }}>
+        <h2>React area</h2>
         <div>React router : home</div>
-        <div>{this.state.count}</div>
+        <div>value : {this.state.count}</div>
         <Button type="primary" onClick={() => this.selfAdd()}>修改react的值+1</Button>
         <Button type="primary" onClick={() => this.add()}>修改vue的值+1</Button>
         <div id="r-home"></div>
