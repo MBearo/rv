@@ -1,18 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import Vue from 'vue'
-let id = 1
 
-export default function (props) {
-  let vueInstance = null
-  useEffect(() => {
-    vueInstance = new Vue({
-      render: h => h(props.vue)
-    }).$mount(`#v${id}`)
-    return function cleanup() {
-      vueInstance.$destroy()
+export default class Wrapper extends React.Component {
+  createVueInstance(targetElement) {
+    this.targetElement = targetElement
+  }
+  componentDidUpdate() {
+    console.log(this.vueInstance);
+    for (const key in this.props) {
+      if (this.props.hasOwnProperty(key)) {
+        this.vueInstance[key] = this.props[key]
+      }
     }
-  }, []);
-  return (
-    <div id={'v' + id}></div>
-  )
+  }
+  componentDidMount() {
+    this.vueInstance = new Vue({
+      // el: this.targetElement,
+      ...this.props.is
+    })
+    console.log(this.vueInstance);
+    for (const key in this.props) {
+      if (this.props.hasOwnProperty(key)) {
+        console.log(typeof this.props[key])
+        if (typeof this.props[key] === 'function') {
+          this.vueInstance.$on(key, this.props[key])
+        } else {
+          this.vueInstance[key] = this.props[key]
+        }
+      }
+    }
+    this.vueInstance.$mount(this.targetElement)
+  }
+  componentWillUnmount() {
+    this.vueInstance.$destroy()
+  }
+  render() {
+    return <div ref={e => this.createVueInstance(e)}>789</div>
+  }
 }

@@ -8,7 +8,7 @@ module.exports = merge(common, {
   // 配置服务端目录和端口
   devServer: {
     contentBase: '../dist',
-    port: 3000,
+    port: 2333,
     hot: true,
     historyApiFallback: {
       index: '/index.html'
