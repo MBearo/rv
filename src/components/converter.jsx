@@ -16,7 +16,7 @@ export default class Wrapper extends React.Component {
   componentDidMount() {
     this.vueInstance = new Vue({
       // el: this.targetElement,
-      ...this.props.is
+      ...this.props.component
     })
     console.log(this.vueInstance);
     for (const key in this.props) {
